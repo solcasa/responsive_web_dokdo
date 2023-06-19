@@ -29,6 +29,7 @@ $(function () {
             disableOnInteraction: false,
         },
         slideActiveClass: 'on',
+
     });
 
     $('.main_visual .arrows .left').on('click', function () {
@@ -41,9 +42,17 @@ $(function () {
 
     const noticeSlide = new Swiper('.notice_slide', {
         loop: true,
-        slidesPerView: 2,
-        spaceBetween: 30,
+        slidesPerView: 1,
+        spaceBetween: 0,
 
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+
+            }
+        }
+        // 768 이상되었을때 pc (반대개념이군)
     });
 
     $('.main_notice .arrows .left').on('click', function () {
@@ -54,5 +63,28 @@ $(function () {
         noticeSlide.slideNext();
     });
 
+    $('.mobile_btn').on('click', function () {
+        $('.gnb').toggleClass('on');
+        $('.header').toggleClass('oo');
+    });
 
-})
+    $('.gnb .main_menu>li>a').on('click', function (e) {
+        if ($('.gnb').hasClass('on')) {
+            e.preventDefault();
+            $(this).next().stop().slideToggle();
+            $(this).parent().siblings().find('.sub_menu').slideUp();
+        }
+    });
+
+    $(window).on('resize', function () {
+        $('.gnb').removeClass('on')
+    });
+
+    $('.gnb').on('wheel', function (e) {
+        if ($('.gnb').hasClass('on')) {
+            e.preventDefault();
+        }
+    });
+
+
+});
